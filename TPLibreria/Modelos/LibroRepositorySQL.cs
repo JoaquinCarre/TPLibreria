@@ -42,19 +42,19 @@ namespace TPLibreria.Modelos
             return libros;
         }
 
-        public async Task<Libro?> GetByISBNAsync(int isbn)
+        public async Task<Libro?> GetByISBNAsync(string isbn)
         {
             Libro? libro = null;
             string sql = @"
                 SELECT *
                 FROM   Libros
-                WHERE  isbn = @Isbn";
+                WHERE  isbn = @isbn";
 
             await using SqlConnection conn = new SqlConnection(CONNECTION_STRING);
             await conn.OpenAsync();
 
             await using SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@Isbn", isbn);
+            cmd.Parameters.AddWithValue("@isbn", isbn);
 
             await using SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
@@ -72,13 +72,13 @@ namespace TPLibreria.Modelos
             string sql = @"
                 SELECT *
                 FROM   Libros
-                WHERE  idlibro = @IdLibro";
+                WHERE  idlibro = @idlibro";
 
             await using SqlConnection conn = new SqlConnection(CONNECTION_STRING);
             await conn.OpenAsync();
 
             await using SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("@IdLibro", idLibro);
+            cmd.Parameters.AddWithValue("@idlibro", idLibro);
 
             await using SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
@@ -94,7 +94,7 @@ namespace TPLibreria.Modelos
         {
             string sql = @"
                 INSERT INTO Libros (isbn, titulo, autor, editorial, categoria, fechapublicacion, precioventa, disponible)
-                VALUES (@Isbn, @Titulo, @Autor, @Editorial, @Categoria, @FechaPublicacion, @PrecioVenta, @Disponible)";
+                VALUES (@isbn, @titulo, @autor, @editorial, @categoria, @fechapublicacion, @precioventa, @disponible)";
 
             await using SqlConnection conn = new SqlConnection(CONNECTION_STRING);
             await conn.OpenAsync();
@@ -105,8 +105,8 @@ namespace TPLibreria.Modelos
             cmd.Parameters.AddWithValue("autor", libro.Autor);
             cmd.Parameters.AddWithValue("editorial", libro.Editorial);
             cmd.Parameters.AddWithValue("categoria", libro.Categoria);
-            cmd.Parameters.AddWithValue("fechaPublicacion", libro.FechaPublicacion);
-            cmd.Parameters.AddWithValue("precioVenta", libro.PrecioVenta);
+            cmd.Parameters.AddWithValue("fechapublicacion", libro.FechaPublicacion);
+            cmd.Parameters.AddWithValue("precioventa", libro.PrecioVenta);
             cmd.Parameters.AddWithValue("disponible", libro.Disponible);
 
             int result = await cmd.ExecuteNonQueryAsync();
@@ -130,8 +130,8 @@ namespace TPLibreria.Modelos
             cmd.Parameters.AddWithValue("autor", libro.Autor);
             cmd.Parameters.AddWithValue("editorial", libro.Editorial);
             cmd.Parameters.AddWithValue("categoria", libro.Categoria);
-            cmd.Parameters.AddWithValue("fechaPublicacion", libro.FechaPublicacion);
-            cmd.Parameters.AddWithValue("precioVenta", libro.PrecioVenta);
+            cmd.Parameters.AddWithValue("fechapublicacion", libro.FechaPublicacion);
+            cmd.Parameters.AddWithValue("precioventa", libro.PrecioVenta);
             cmd.Parameters.AddWithValue("disponible", libro.Disponible);
 
             int result = await cmd.ExecuteNonQueryAsync();

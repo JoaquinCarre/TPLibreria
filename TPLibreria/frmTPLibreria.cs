@@ -28,16 +28,27 @@ namespace TPLibreria
         {
             this.CenterToScreen();
 
+            txtIsbn.MaxLength = 13; // En la ejercitación se pide que debe tener un exacto de 13 dígitos, por lo que se establece el mismo límite en el TextBox.
+
+            txtTitulo.MaxLength = 150; // En la tabla Libros aparece como un máximo de 150 caracteres, por lo que se establece el mismo límite en el TextBox.
+
+            txtAutor.MaxLength = 80; // En la tabla Libros aparece como un máximo de 80 caracteres, por lo que se establece el mismo límite en el TextBox.
+            
             cmbEditorial.Items.Add("Prentice Hall");
             cmbEditorial.Items.Add("Manning");
             cmbEditorial.Items.Add("OReilly Media");
             cmbEditorial.Items.Add("Andrew Hunt");
             cmbEditorial.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEditorial.SelectedIndex = 0;
-            chkDisponible.Checked = false;
-
+            
             dtpFechaPublicacion.MinDate = new DateTime(1900, 1, 1);
             dtpFechaPublicacion.MaxDate = DateTime.Today;
+            
+            rbProgramacion.Checked = true;
+            
+            txtPrecioVenta.MaxLength = 9; // 9 dígitos para el precio de venta porque son 8 digitos donde 2 son decimales y se incluye la coma decimal.
+            
+            chkDisponible.Checked = false;
 
             await CargarGrilla();
         }
@@ -73,7 +84,17 @@ namespace TPLibreria
                 nuevoLibro.Autor = txtAutor.Text;
                 nuevoLibro.FechaPublicacion = dtpFechaPublicacion.Value;
                 nuevoLibro.Editorial = cmbEditorial.Text;
-                nuevoLibro.Categoria = rbCategoria.Text;
+                if (rbAnalisisNumerico.Checked)
+                {
+                    nuevoLibro.Categoria = rbAnalisisNumerico.Text;
+                }
+                    else if (rbSistemas.Checked)
+                    {
+                        nuevoLibro.Categoria = rbSistemas.Text;
+                    }
+                        else { 
+                            nuevoLibro.Categoria = rbProgramacion.Text;
+                        }
                 nuevoLibro.PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
                 nuevoLibro.Disponible = chkDisponible.Checked;
 
@@ -102,46 +123,51 @@ namespace TPLibreria
 
         private void ValidarFormulario()
         {
-
-            int isbn;
             decimal precioVenta;
+            string isbn = txtIsbn.Text.Trim();
+            string titulo = txtTitulo.Text.Trim();
+            string autor = txtAutor.Text.Trim();
+            
             var errores = new List<string>();
 
-            if (txtIsbn.Text.Trim() == string.Empty)
+            if (isbn == string.Empty) { 
                 errores.Add("El ISBN es obligatorio.");
-            else
-                if (int.TryParse(txtIsbn.Text, out isbn) == false)
-                    errores.Add("El ISBN debe ser numerico.");
-                else
-                    if(isbn == 0)
-                        errores.Add("El ISBN no puede ser cero.");
-                    else
-                        if (txtIsbn.Text.Length != 13)
+            }
+                else if (!isbn.All(char.IsAsciiDigit)) { 
+                    errores.Add("El ISBN debe ser numérico.");
+                }
+                    else if (isbn.Length != 13) { 
                         errores.Add("El ISBN debe estar formado por 13 dígitos.");
-
-            if (txtTitulo.Text.Trim() == string.Empty)
+                    }
+                        else if (isbn.All(c => c == '0')) { 
+                            errores.Add("El ISBN no puede ser cero.");
+                        }
+            
+            if (titulo == string.Empty) { 
                 errores.Add("El título es obligatorio.");
-                else
-                    if (txtTitulo.Text.Length > 32767)
-                    errores.Add("El título debe tener menos de 32767 caracteres.");
-
-            if (txtAutor.Text.Trim() == string.Empty)
+            }
+                //else if (titulo.Length > 32767) { 
+                //        errores.Add("El título debe tener menos de 32767 caracteres.");
+                //}
+            
+            if (autor == string.Empty) { 
                 errores.Add("El autor es obligatorio.");
-            else
-                if (txtAutor.Text.Length > 32767)
-                    errores.Add("El autor debe tener menos de 32767 caracteres.");
+            }
+                //else if (autor.Length > 32767) { 
+                //    errores.Add("El autor debe tener menos de 32767 caracteres.");
+                //}
 
-            if (txtPrecioVenta.Text.Trim() == string.Empty)
+            if (txtPrecioVenta.Text.Trim() == string.Empty) { 
                 errores.Add("El precio de venta es obligatorio.");
-            else
-                if (decimal.TryParse(txtPrecioVenta.Text, out precioVenta) == false)
-                    errores.Add("El precio de venta debe ser numerico.");
-                else
-                    if (precioVenta == 0)
-                        errores.Add("El precio de venta no puede ser cero.");
+            }
+                else if (decimal.TryParse(txtPrecioVenta.Text, out precioVenta) == false) { 
+                        errores.Add("El precio de venta debe ser numerico.");
+                }
+                    else if (precioVenta == 0) { 
+                                errores.Add("El precio de venta no puede ser cero.");
+                    }
 
-            if (errores.Count > 0)
-            {
+            if (errores.Count > 0) {
                 throw new Exception(string.Join("\n", errores));
             }
         }
@@ -149,7 +175,7 @@ namespace TPLibreria
         private async Task ValidarReglas(Libro libro)
         {
 
-            Libro? libroMismoISBN = await this._repo.GetByISBNAsync(int.Parse(libro.ISBN));//Hay que revisar el problema este, capaz nos conviene tratar ISBN como integer desde su definición
+            Libro? libroMismoISBN = await this._repo.GetByISBNAsync(libro.ISBN);//SOLUCION: En el metodo GetByISBNAsync cambie el parametro int isbn por string isbn. PROBLEMA: Hay que revisar el problema este, capaz nos conviene tratar ISBN como integer desde su definición
 
             if (libro.IdLibro == 0)
             {
@@ -165,6 +191,7 @@ namespace TPLibreria
             }
             //Preguntar a los profes porque las categorías a seleccionar y las que usan para los precios de venta NO COINCIDEN
             //Puntos .9 y 2.10 del TP
+
             if ((libro.Categoria == "Programación") && (libro.PrecioVenta < 40000))
             {
                 throw new Exception("Para la categoría programación el libro debe tener un valor mínimo de 40000.");

@@ -7,7 +7,7 @@ namespace TPLibreria.Modelos
     public interface ILibroRepository
     {
         Task<List<Libro>> GetAllAsync();
-        Task<Libro> GetByISBNAsync(int isbn);
+        Task<Libro> GetByISBNAsync(string isbn);
         Task<Libro?> GetByIdAsync(int idLibro);
 
         Task<bool> CreateAsync(Libro libro);

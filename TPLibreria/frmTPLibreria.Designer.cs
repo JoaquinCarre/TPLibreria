@@ -36,7 +36,7 @@
             txtAutor = new TextBox();
             cmbEditorial = new ComboBox();
             dtpFechaPublicacion = new DateTimePicker();
-            rbCategoria = new RadioButton();
+            rbProgramacion = new RadioButton();
             txtPrecioVenta = new TextBox();
             chkDisponible = new CheckBox();
             lblIsbn = new Label();
@@ -47,6 +47,8 @@
             lblEditorial = new Label();
             lblPrecioVenta = new Label();
             lblDisponible = new Label();
+            rbAnalisisNumerico = new RadioButton();
+            rbSistemas = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)dgvLibros).BeginInit();
             SuspendLayout();
             // 
@@ -117,20 +119,20 @@
             dtpFechaPublicacion.Size = new Size(101, 23);
             dtpFechaPublicacion.TabIndex = 8;
             // 
-            // rbCategoria
+            // rbProgramacion
             // 
-            rbCategoria.AutoSize = true;
-            rbCategoria.Location = new Point(70, 163);
-            rbCategoria.Name = "rbCategoria";
-            rbCategoria.Size = new Size(94, 19);
-            rbCategoria.TabIndex = 9;
-            rbCategoria.TabStop = true;
-            rbCategoria.Text = "radioButton1";
-            rbCategoria.UseVisualStyleBackColor = true;
+            rbProgramacion.AutoSize = true;
+            rbProgramacion.Location = new Point(70, 163);
+            rbProgramacion.Name = "rbProgramacion";
+            rbProgramacion.Size = new Size(100, 19);
+            rbProgramacion.TabIndex = 9;
+            rbProgramacion.TabStop = true;
+            rbProgramacion.Text = "Programación";
+            rbProgramacion.UseVisualStyleBackColor = true;
             // 
             // txtPrecioVenta
             // 
-            txtPrecioVenta.Location = new Point(101, 239);
+            txtPrecioVenta.Location = new Point(103, 247);
             txtPrecioVenta.Name = "txtPrecioVenta";
             txtPrecioVenta.Size = new Size(100, 23);
             txtPrecioVenta.TabIndex = 10;
@@ -202,11 +204,11 @@
             // lblPrecioVenta
             // 
             lblPrecioVenta.AutoSize = true;
-            lblPrecioVenta.Location = new Point(7, 242);
+            lblPrecioVenta.Location = new Point(6, 250);
             lblPrecioVenta.Name = "lblPrecioVenta";
-            lblPrecioVenta.Size = new Size(88, 15);
+            lblPrecioVenta.Size = new Size(100, 15);
             lblPrecioVenta.TabIndex = 18;
-            lblPrecioVenta.Text = "Precio de Venta";
+            lblPrecioVenta.Text = "Precio de Venta  $";
             // 
             // lblDisponible
             // 
@@ -217,11 +219,35 @@
             lblDisponible.TabIndex = 19;
             lblDisponible.Text = "Disponible";
             // 
+            // rbAnalisisNumerico
+            // 
+            rbAnalisisNumerico.AutoSize = true;
+            rbAnalisisNumerico.Location = new Point(70, 188);
+            rbAnalisisNumerico.Name = "rbAnalisisNumerico";
+            rbAnalisisNumerico.Size = new Size(121, 19);
+            rbAnalisisNumerico.TabIndex = 20;
+            rbAnalisisNumerico.TabStop = true;
+            rbAnalisisNumerico.Text = "Análisis Numérico";
+            rbAnalisisNumerico.UseVisualStyleBackColor = true;
+            // 
+            // rbSistemas
+            // 
+            rbSistemas.AutoSize = true;
+            rbSistemas.Location = new Point(70, 214);
+            rbSistemas.Name = "rbSistemas";
+            rbSistemas.Size = new Size(71, 19);
+            rbSistemas.TabIndex = 21;
+            rbSistemas.TabStop = true;
+            rbSistemas.Text = "Sistemas";
+            rbSistemas.UseVisualStyleBackColor = true;
+            // 
             // frmTPLibreria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 450);
+            Controls.Add(rbSistemas);
+            Controls.Add(rbAnalisisNumerico);
             Controls.Add(lblDisponible);
             Controls.Add(lblPrecioVenta);
             Controls.Add(lblEditorial);
@@ -232,7 +258,7 @@
             Controls.Add(lblIsbn);
             Controls.Add(chkDisponible);
             Controls.Add(txtPrecioVenta);
-            Controls.Add(rbCategoria);
+            Controls.Add(rbProgramacion);
             Controls.Add(dtpFechaPublicacion);
             Controls.Add(cmbEditorial);
             Controls.Add(txtAutor);
@@ -258,7 +284,7 @@
         private TextBox txtAutor;
         private ComboBox cmbEditorial;
         private DateTimePicker dtpFechaPublicacion;
-        private RadioButton rbCategoria;
+        private RadioButton rbProgramacion;
         private TextBox txtPrecioVenta;
         private CheckBox chkDisponible;
         private Label lblIsbn;
@@ -269,5 +295,7 @@
         private Label lblEditorial;
         private Label lblPrecioVenta;
         private Label lblDisponible;
+        private RadioButton rbAnalisisNumerico;
+        private RadioButton rbSistemas;
     }
 }
