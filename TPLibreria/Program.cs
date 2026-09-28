@@ -1,3 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
+using TPLibreria.Modelos;
+
 namespace TPLibreria
 {
     internal static class Program
@@ -8,10 +11,18 @@ namespace TPLibreria
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            var services = new ServiceCollection();
+
+            services.AddScoped<ILibroRepository, LibroRepositorySQL>();
+
+            services.AddTransient<frmTPLibreria>();
+
+            using var provider = services.BuildServiceProvider();
+            var mainForm = provider.GetRequiredService<frmTPLibreria>();
+
+            Application.Run(mainForm);
         }
     }
 }
