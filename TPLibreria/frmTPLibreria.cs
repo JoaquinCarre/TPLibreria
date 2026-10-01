@@ -30,11 +30,11 @@ namespace TPLibreria
         {
             this.CenterToScreen();
 
-            txtIsbn.MaxLength = 13; // En la ejercitación se pide que debe tener un exacto de 13 dígitos, por lo que se establece el mismo límite en el TextBox.
+            txtIsbn.MaxLength = 13; 
 
-            txtTitulo.MaxLength = 150; // En la tabla Libros aparece como un máximo de 150 caracteres, por lo que se establece el mismo límite en el TextBox.
+            txtTitulo.MaxLength = 150; 
 
-            txtAutor.MaxLength = 80; // En la tabla Libros aparece como un máximo de 80 caracteres, por lo que se establece el mismo límite en el TextBox.
+            txtAutor.MaxLength = 80; 
 
             cmbEditorial.Items.Add("Prentice Hall");
             cmbEditorial.Items.Add("Manning");
@@ -48,7 +48,7 @@ namespace TPLibreria
 
             rbProgramacion.Checked = true;
 
-            txtPrecioVenta.MaxLength = 9; // 9 dígitos para el precio de venta porque son 8 digitos donde 2 son decimales y se incluye la coma decimal.
+            txtPrecioVenta.MaxLength = 9;
 
             chkDisponible.Checked = false;
 
@@ -73,7 +73,7 @@ namespace TPLibreria
             }
         }
 
-        private async void btnRegistrar_Click(object sender, EventArgs e)//Le agregué el ASYNC al método para poder usar el AWAIT
+        private async void btnRegistrar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -154,18 +154,12 @@ namespace TPLibreria
             {
                 errores.Add("El título es obligatorio.");
             }
-            //else if (titulo.Length > 32767) { 
-            //        errores.Add("El título debe tener menos de 32767 caracteres.");
-            //}
 
             if (autor == string.Empty)
             {
                 errores.Add("El autor es obligatorio.");
             }
-            //else if (autor.Length > 32767) { 
-            //    errores.Add("El autor debe tener menos de 32767 caracteres.");
-            //}
-
+            
             if (txtPrecioVenta.Text.Trim() == string.Empty)
             {
                 errores.Add("El precio de venta es obligatorio.");
@@ -192,18 +186,14 @@ namespace TPLibreria
 
             if (libro.IdLibro == 0)
             {
-                //es una alta
                 if (libroMismoISBN != null)
                     throw new Exception("El número de ISBN ya existe.");
             }
             else
             {
-                //es una modificación
                 if (libroMismoISBN != null && libro.IdLibro != libroMismoISBN.IdLibro)
                     throw new Exception("El número de ISBN ya existe.");
             }
-            //Preguntar a los profes porque las categorías a seleccionar y las que usan para los precios de venta NO COINCIDEN
-            //Puntos .9 y 2.10 del TP
 
             if (libro.Categoria == "Programación" && libro.PrecioVenta < 40000)
             {
@@ -248,7 +238,7 @@ namespace TPLibreria
 
         private async void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //InicializarControles();
+            InicializarControles();
 
             if (dgvLibros.CurrentRow != null)
             {
