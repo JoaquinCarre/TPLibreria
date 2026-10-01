@@ -84,13 +84,13 @@ namespace TPLibreria
                 nuevoLibro.Autor = txtAutor.Text;
                 nuevoLibro.FechaPublicacion = dtpFechaPublicacion.Value;
                 nuevoLibro.Editorial = cmbEditorial.Text;
-                if (rbAnalisisNumerico.Checked)
+                if (rbDesarrolloWeb.Checked)
                 {
-                    nuevoLibro.Categoria = rbAnalisisNumerico.Text;
+                    nuevoLibro.Categoria = rbDesarrolloWeb.Text;
                 }
-                    else if (rbSistemas.Checked)
+                    else if (rbBasesDeDatos.Checked)
                     {
-                        nuevoLibro.Categoria = rbSistemas.Text;
+                        nuevoLibro.Categoria = rbBasesDeDatos.Text;
                     }
                         else { 
                             nuevoLibro.Categoria = rbProgramacion.Text;
@@ -198,15 +198,15 @@ namespace TPLibreria
             }
             else
             {
-                if ((libro.Categoria == "Análisis Numérico") && (libro.PrecioVenta < 45000))
+                if ((libro.Categoria == "Desarrollo Web") && (libro.PrecioVenta < 45000))
                 {
-                    throw new Exception("Para la categoría Análisis Numérico el libro debe tener un valor mínimo de 45000.");
+                    throw new Exception("Para la categoría Desarrollo Web el libro debe tener un valor mínimo de 45000.");
                 }
                 else
                 {
                     if (libro.PrecioVenta < 50000)
                     {
-                        throw new Exception("Para la categoría Sistemas el libro debe tener un valor mínimo de 50000.");
+                        throw new Exception("Para la categoría Bases de Datos el libro debe tener un valor mínimo de 50000.");
                     }
                 }
             }

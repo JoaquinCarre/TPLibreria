@@ -47,8 +47,8 @@
             lblEditorial = new Label();
             lblPrecioVenta = new Label();
             lblDisponible = new Label();
-            rbAnalisisNumerico = new RadioButton();
-            rbSistemas = new RadioButton();
+            rbDesarrolloWeb = new RadioButton();
+            rbBasesDeDatos = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)dgvLibros).BeginInit();
             SuspendLayout();
             // 
@@ -219,35 +219,35 @@
             lblDisponible.TabIndex = 19;
             lblDisponible.Text = "Disponible";
             // 
-            // rbAnalisisNumerico
+            // rbDesarrolloWeb
             // 
-            rbAnalisisNumerico.AutoSize = true;
-            rbAnalisisNumerico.Location = new Point(70, 188);
-            rbAnalisisNumerico.Name = "rbAnalisisNumerico";
-            rbAnalisisNumerico.Size = new Size(121, 19);
-            rbAnalisisNumerico.TabIndex = 20;
-            rbAnalisisNumerico.TabStop = true;
-            rbAnalisisNumerico.Text = "Análisis Numérico";
-            rbAnalisisNumerico.UseVisualStyleBackColor = true;
+            rbDesarrolloWeb.AutoSize = true;
+            rbDesarrolloWeb.Location = new Point(70, 188);
+            rbDesarrolloWeb.Name = "rbDesarrolloWeb";
+            rbDesarrolloWeb.Size = new Size(105, 19);
+            rbDesarrolloWeb.TabIndex = 20;
+            rbDesarrolloWeb.TabStop = true;
+            rbDesarrolloWeb.Text = "Desarrollo Web";
+            rbDesarrolloWeb.UseVisualStyleBackColor = true;
             // 
-            // rbSistemas
+            // rbBasesDeDatos
             // 
-            rbSistemas.AutoSize = true;
-            rbSistemas.Location = new Point(70, 214);
-            rbSistemas.Name = "rbSistemas";
-            rbSistemas.Size = new Size(71, 19);
-            rbSistemas.TabIndex = 21;
-            rbSistemas.TabStop = true;
-            rbSistemas.Text = "Sistemas";
-            rbSistemas.UseVisualStyleBackColor = true;
+            rbBasesDeDatos.AutoSize = true;
+            rbBasesDeDatos.Location = new Point(70, 214);
+            rbBasesDeDatos.Name = "rbBasesDeDatos";
+            rbBasesDeDatos.Size = new Size(103, 19);
+            rbBasesDeDatos.TabIndex = 21;
+            rbBasesDeDatos.TabStop = true;
+            rbBasesDeDatos.Text = "Bases de Datos";
+            rbBasesDeDatos.UseVisualStyleBackColor = true;
             // 
             // frmTPLibreria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1182, 450);
-            Controls.Add(rbSistemas);
-            Controls.Add(rbAnalisisNumerico);
+            Controls.Add(rbBasesDeDatos);
+            Controls.Add(rbDesarrolloWeb);
             Controls.Add(lblDisponible);
             Controls.Add(lblPrecioVenta);
             Controls.Add(lblEditorial);
@@ -295,7 +295,7 @@
         private Label lblEditorial;
         private Label lblPrecioVenta;
         private Label lblDisponible;
-        private RadioButton rbAnalisisNumerico;
-        private RadioButton rbSistemas;
+        private RadioButton rbDesarrolloWeb;
+        private RadioButton rbBasesDeDatos;
     }
 }
