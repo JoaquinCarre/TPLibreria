@@ -19,8 +19,10 @@ namespace TPLibreria
             txtIsbn.Clear();
             txtTitulo.Clear();
             txtAutor.Clear();
-            dtpFechaPublicacion.Value = DateTime.Today;
             cmbEditorial.SelectedIndex = 0;
+            dtpFechaPublicacion.Value = DateTime.Today;
+            rbProgramacion.Checked = true;
+            txtPrecioVenta.Clear();
             chkDisponible.Checked = false;
         }
 
@@ -33,21 +35,21 @@ namespace TPLibreria
             txtTitulo.MaxLength = 150; // En la tabla Libros aparece como un máximo de 150 caracteres, por lo que se establece el mismo límite en el TextBox.
 
             txtAutor.MaxLength = 80; // En la tabla Libros aparece como un máximo de 80 caracteres, por lo que se establece el mismo límite en el TextBox.
-            
+
             cmbEditorial.Items.Add("Prentice Hall");
             cmbEditorial.Items.Add("Manning");
             cmbEditorial.Items.Add("OReilly Media");
             cmbEditorial.Items.Add("Andrew Hunt");
             cmbEditorial.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbEditorial.SelectedIndex = 0;
-            
+
             dtpFechaPublicacion.MinDate = new DateTime(1900, 1, 1);
             dtpFechaPublicacion.MaxDate = DateTime.Today;
-            
+
             rbProgramacion.Checked = true;
-            
+
             txtPrecioVenta.MaxLength = 9; // 9 dígitos para el precio de venta porque son 8 digitos donde 2 son decimales y se incluye la coma decimal.
-            
+
             chkDisponible.Checked = false;
 
             await CargarGrilla();
@@ -92,7 +94,8 @@ namespace TPLibreria
                     {
                         nuevoLibro.Categoria = rbBasesDeDatos.Text;
                     }
-                        else { 
+                        else
+                        {
                             nuevoLibro.Categoria = rbProgramacion.Text;
                         }
                 nuevoLibro.PrecioVenta = decimal.Parse(txtPrecioVenta.Text);
@@ -102,14 +105,14 @@ namespace TPLibreria
 
                 if (nuevoLibro.IdLibro == 0)
                 {
-          
+
                     await _repo.CreateAsync(nuevoLibro);
                 }
-                else
-                {
-                    
-                    await _repo.UpdateAsync(nuevoLibro);
-                }
+                    else
+                    {
+
+                        await _repo.UpdateAsync(nuevoLibro);
+                    }
 
                 await CargarGrilla();
 
@@ -127,47 +130,57 @@ namespace TPLibreria
             string isbn = txtIsbn.Text.Trim();
             string titulo = txtTitulo.Text.Trim();
             string autor = txtAutor.Text.Trim();
-            
+
             var errores = new List<string>();
 
-            if (isbn == string.Empty) { 
+            if (isbn == string.Empty)
+            {
                 errores.Add("El ISBN es obligatorio.");
             }
-                else if (!isbn.All(char.IsAsciiDigit)) { 
-                    errores.Add("El ISBN debe ser numérico.");
-                }
-                    else if (isbn.Length != 13) { 
-                        errores.Add("El ISBN debe estar formado por 13 dígitos.");
-                    }
-                        else if (isbn.All(c => c == '0')) { 
-                            errores.Add("El ISBN no puede ser cero.");
-                        }
-            
-            if (titulo == string.Empty) { 
+            else if (!isbn.All(char.IsAsciiDigit))
+            {
+                errores.Add("El ISBN debe ser numérico.");
+            }
+            else if (isbn.Length != 13)
+            {
+                errores.Add("El ISBN debe estar formado por 13 dígitos.");
+            }
+            else if (isbn.All(c => c == '0'))
+            {
+                errores.Add("El ISBN no puede ser cero.");
+            }
+
+            if (titulo == string.Empty)
+            {
                 errores.Add("El título es obligatorio.");
             }
-                //else if (titulo.Length > 32767) { 
-                //        errores.Add("El título debe tener menos de 32767 caracteres.");
-                //}
-            
-            if (autor == string.Empty) { 
+            //else if (titulo.Length > 32767) { 
+            //        errores.Add("El título debe tener menos de 32767 caracteres.");
+            //}
+
+            if (autor == string.Empty)
+            {
                 errores.Add("El autor es obligatorio.");
             }
-                //else if (autor.Length > 32767) { 
-                //    errores.Add("El autor debe tener menos de 32767 caracteres.");
-                //}
+            //else if (autor.Length > 32767) { 
+            //    errores.Add("El autor debe tener menos de 32767 caracteres.");
+            //}
 
-            if (txtPrecioVenta.Text.Trim() == string.Empty) { 
+            if (txtPrecioVenta.Text.Trim() == string.Empty)
+            {
                 errores.Add("El precio de venta es obligatorio.");
             }
-                else if (decimal.TryParse(txtPrecioVenta.Text, out precioVenta) == false) { 
-                        errores.Add("El precio de venta debe ser numerico.");
-                }
-                    else if (precioVenta == 0) { 
-                                errores.Add("El precio de venta no puede ser cero.");
-                    }
+            else if (decimal.TryParse(txtPrecioVenta.Text, out precioVenta) == false)
+            {
+                errores.Add("El precio de venta debe ser numerico.");
+            }
+            else if (precioVenta == 0)
+            {
+                errores.Add("El precio de venta no puede ser cero.");
+            }
 
-            if (errores.Count > 0) {
+            if (errores.Count > 0)
+            {
                 throw new Exception(string.Join("\n", errores));
             }
         }
@@ -192,19 +205,19 @@ namespace TPLibreria
             //Preguntar a los profes porque las categorías a seleccionar y las que usan para los precios de venta NO COINCIDEN
             //Puntos .9 y 2.10 del TP
 
-            if ((libro.Categoria == "Programación") && (libro.PrecioVenta < 40000))
+            if (libro.Categoria == "Programación" && libro.PrecioVenta < 40000)
             {
                 throw new Exception("Para la categoría programación el libro debe tener un valor mínimo de 40000.");
             }
             else
             {
-                if ((libro.Categoria == "Desarrollo Web") && (libro.PrecioVenta < 45000))
+                if (libro.Categoria == "Desarrollo Web" && libro.PrecioVenta < 45000)
                 {
                     throw new Exception("Para la categoría Desarrollo Web el libro debe tener un valor mínimo de 45000.");
                 }
                 else
                 {
-                    if (libro.PrecioVenta < 50000)
+                    if (libro.Categoria == "Bases de Datos" && libro.PrecioVenta < 50000)
                     {
                         throw new Exception("Para la categoría Bases de Datos el libro debe tener un valor mínimo de 50000.");
                     }
@@ -212,6 +225,76 @@ namespace TPLibreria
             }
         }
 
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            string isbn = txtIsbn.Text.Trim();
+            string titulo = txtTitulo.Text.Trim();
+            string autor = txtAutor.Text.Trim();
+            int editorial = cmbEditorial.SelectedIndex;
+            bool categoria = rbProgramacion.Checked;
+            DateTime fechapubli = dtpFechaPublicacion.Value;
+            string precioventa = txtPrecioVenta.Text.Trim();
+            bool disponible = chkDisponible.Checked;
 
+            if (isbn != string.Empty || titulo != string.Empty || autor != string.Empty || fechapubli != DateTime.Today || editorial != 0 || categoria == false || precioventa != string.Empty || disponible != false)
+            {
+                DialogResult respuesta = MessageBox.Show("¿Estas seguro de cancelar la carga del formulario?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (respuesta == DialogResult.Yes)
+                {
+                    InicializarControles();
+                }
+            }
+        }
+
+        private async void eliminarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //InicializarControles();
+
+            if (dgvLibros.CurrentRow != null)
+            {
+                int idLibroAEliminar = int.Parse(dgvLibros.CurrentRow.Cells["IdLibro"].Value.ToString());
+                Libro libro = await this._repo.GetByIdAsync(idLibroAEliminar);
+                DialogResult respuesta = MessageBox.Show($"Desea eliminar el libro '{libro.Titulo}'?", "Atencion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (respuesta == DialogResult.Yes)
+                {
+                    await this._repo.DeleteAsync(idLibroAEliminar);
+
+                    await CargarGrilla();
+                }
+            }
+        }
+
+        private async void modificarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            InicializarControles();
+
+            if (dgvLibros.CurrentRow != null)
+            {
+                try
+                {
+                    this._idLibroModificar = int.Parse(dgvLibros.CurrentRow.Cells["IdLibro"].Value.ToString());
+
+                    Libro? libro = (Libro)await this._repo.GetByIdAsync(this._idLibroModificar);
+
+                    txtIsbn.Text = libro.ISBN;
+                    txtTitulo.Text = libro.Titulo;
+                    txtAutor.Text = libro.Autor;
+                    if (libro.Editorial != null)
+                    {
+                        cmbEditorial.SelectedItem = libro.Editorial;
+                    }
+                    dtpFechaPublicacion.Value = libro.FechaPublicacion;
+                    rbProgramacion.Checked = libro.Categoria == "Programación";
+                    rbDesarrolloWeb.Checked = libro.Categoria == "Desarrollo Web";
+                    rbBasesDeDatos.Checked = libro.Categoria == "Bases de Datos";
+                    txtPrecioVenta.Text = libro.PrecioVenta.ToString();
+                    chkDisponible.Checked = libro.Disponible;
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.Message, "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
     }
 }

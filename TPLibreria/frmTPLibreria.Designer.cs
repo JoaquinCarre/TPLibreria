@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             btnCancelar = new Button();
             dgvLibros = new DataGridView();
+            cmsModificarEliminar = new ContextMenuStrip(components);
+            modificarToolStripMenuItem = new ToolStripMenuItem();
+            eliminarToolStripMenuItem = new ToolStripMenuItem();
             btnRegistrar = new Button();
             txtIsbn = new TextBox();
             txtTitulo = new TextBox();
@@ -50,6 +54,7 @@
             rbDesarrolloWeb = new RadioButton();
             rbBasesDeDatos = new RadioButton();
             ((System.ComponentModel.ISupportInitialize)dgvLibros).BeginInit();
+            cmsModificarEliminar.SuspendLayout();
             SuspendLayout();
             // 
             // btnCancelar
@@ -60,17 +65,39 @@
             btnCancelar.TabIndex = 1;
             btnCancelar.Text = "Cancelar";
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // dgvLibros
             // 
             dgvLibros.AllowUserToAddRows = false;
             dgvLibros.AllowUserToDeleteRows = false;
             dgvLibros.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLibros.ContextMenuStrip = cmsModificarEliminar;
             dgvLibros.Location = new Point(357, 12);
             dgvLibros.Name = "dgvLibros";
             dgvLibros.ReadOnly = true;
             dgvLibros.Size = new Size(813, 283);
             dgvLibros.TabIndex = 2;
+            // 
+            // cmsModificarEliminar
+            // 
+            cmsModificarEliminar.Items.AddRange(new ToolStripItem[] { modificarToolStripMenuItem, eliminarToolStripMenuItem });
+            cmsModificarEliminar.Name = "cmsModificarEliminar";
+            cmsModificarEliminar.Size = new Size(126, 48);
+            // 
+            // modificarToolStripMenuItem
+            // 
+            modificarToolStripMenuItem.Name = "modificarToolStripMenuItem";
+            modificarToolStripMenuItem.Size = new Size(125, 22);
+            modificarToolStripMenuItem.Text = "Modificar";
+            modificarToolStripMenuItem.Click += modificarToolStripMenuItem_Click;
+            // 
+            // eliminarToolStripMenuItem
+            // 
+            eliminarToolStripMenuItem.Name = "eliminarToolStripMenuItem";
+            eliminarToolStripMenuItem.Size = new Size(125, 22);
+            eliminarToolStripMenuItem.Text = "Eliminar";
+            eliminarToolStripMenuItem.Click += eliminarToolStripMenuItem_Click;
             // 
             // btnRegistrar
             // 
@@ -271,6 +298,7 @@
             Text = "Librería \"El Papiro\"";
             Load += frmTPLibreria_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLibros).EndInit();
+            cmsModificarEliminar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -297,5 +325,8 @@
         private Label lblDisponible;
         private RadioButton rbDesarrolloWeb;
         private RadioButton rbBasesDeDatos;
+        private ContextMenuStrip cmsModificarEliminar;
+        private ToolStripMenuItem modificarToolStripMenuItem;
+        private ToolStripMenuItem eliminarToolStripMenuItem;
     }
 }

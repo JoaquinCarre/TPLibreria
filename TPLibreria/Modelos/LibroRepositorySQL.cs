@@ -119,12 +119,13 @@ namespace TPLibreria.Modelos
                 UPDATE Libros 
                 SET isbn = @isbn, titulo = @titulo, autor = @autor, editorial = @editorial, categoria = @categoria, 
                 fechapublicacion = @fechapublicacion, precioventa = @precioventa, disponible = @disponible 
-                WHERE idpersona = @idpersona";
+                WHERE idlibro = @idlibro";
 
             await using SqlConnection conn = new SqlConnection(CONNECTION_STRING);
             await conn.OpenAsync();
 
             await using SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.Parameters.AddWithValue("idlibro", libro.IdLibro);
             cmd.Parameters.AddWithValue("isbn", libro.ISBN);
             cmd.Parameters.AddWithValue("titulo", libro.Titulo);
             cmd.Parameters.AddWithValue("autor", libro.Autor);
@@ -138,7 +139,7 @@ namespace TPLibreria.Modelos
             return result > 0;
         }
 
-        public async Task<bool> DeleteAsync(int idLibro)
+        public async Task<bool> DeleteAsync(int idlibro)
         {
             string sql = @"
                 DELETE FROM Libros 
@@ -148,7 +149,7 @@ namespace TPLibreria.Modelos
             await conn.OpenAsync();
 
             await using SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.Parameters.AddWithValue("idlibro", idLibro);
+            cmd.Parameters.AddWithValue("idlibro", idlibro);
 
             int result = await cmd.ExecuteNonQueryAsync();
             return result > 0;
